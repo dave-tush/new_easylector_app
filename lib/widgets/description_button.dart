@@ -41,3 +41,48 @@ class DescriptionButton extends StatelessWidget {
     );
   }
 }
+class Buttons extends StatelessWidget {
+  final String text;
+  final Color color;
+  final pressedButton;
+  final Color buttonColor;
+  const Buttons({
+    Key? key,
+    required this.text,
+    required this.color,
+    required this.pressedButton,
+    required this.buttonColor,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          duration: Duration(milliseconds: 500),
+          content: Text("Please select your course and ask questions"),
+        ),
+      ),
+      child: Material(
+        elevation: 2,
+        child: Container(
+          height: 50,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.all(
+              Radius.circular(5),
+            ),
+          ),
+          child:  Center(
+            child: Text(
+              text,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
