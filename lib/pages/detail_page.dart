@@ -10,6 +10,13 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+
+  bool isTapped = false;
+  void favouriteButton (){
+    setState(() {
+      isTapped = !isTapped;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,29 +27,37 @@ class _DetailsPageState extends State<DetailsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.arrow_back),
-                    Text(
+                    const Icon(Icons.arrow_back),
+                    const Text(
                       "Details",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                    ),
+                    InkWell(
+                        onTap: favouriteButton,
+                        child: isTapped
+                            ? const Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                              )
+                            : const Icon(
+                                Icons.favorite_border,
+                                color: Colors.red,
+                              )),
                   ],
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 Center(
-                    child: Image.asset(
-                        "assets/images/book-g3ee54beb5_1920 1.png")),
+                  child:
+                      Image.asset("assets/images/book-g3ee54beb5_1920 1.png"),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -79,38 +94,33 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
                 const Text(
                     "orem ipsum dolor sit amet, consectetur adipiscing elit. Nam sollicitudin sapien nibh, id efficitur ex porta vitae. Nunc vel risus non ipsum tincidunt ultricesavida eros, quis rutrum diam. Nullam maximus."),
-                const DescriptionButton(
-                  name: "Dimensions",
-                  time: "10:00",
+                SizedBox(
+                  height: 290,
+                  child: ListView.builder(
+                      itemCount: topics.length,
+                      itemBuilder: (BuildContext context, int index) => Column(
+                            children: [
+                              DescriptionButton(
+                                name: topics[index],
+                                time: time[index],
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                            ],
+                          )),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const  DescriptionButton(
-                  name: "Dimensions",
-                  time: "10:00",
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const DescriptionButton(
-                  name: "Dimensions",
-                  time: "10:00",
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const DescriptionButton(
-                  name: "Dimensions",
-                  time: "10:00",
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Buttons(
+                Buttons(
                   text: "START NOW",
                   color: Colors.white,
-                  pressedButton: null,
+                  pressedButton: () =>
+                      ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.red,
+                      duration: Duration(milliseconds: 500),
+                      content: Text("Started already"),
+                    ),
+                  ),
                   buttonColor: Colors.red,
                 )
               ],
@@ -119,5 +129,21 @@ class _DetailsPageState extends State<DetailsPage> {
         ),
       ),
     );
+  }
+
+  List<String> time = [
+    "10:00",
+    "20:00",
+    "45:24",
+    "30:10",
+  ];
+  List<String> topics = ["Dimensions", "Vectors", "projectile", "Motion"];
+  int numberOfQuestions = 1;
+  void texts() {
+    setState(() {
+      if (numberOfQuestions <= 34) {
+        numberOfQuestions++;
+      }
+    });
   }
 }

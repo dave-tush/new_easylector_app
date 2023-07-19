@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class DescriptionButton extends StatelessWidget {
   final String name;
   final String time;
@@ -13,6 +14,7 @@ class DescriptionButton extends StatelessWidget {
     return InkWell(
       onTap: null,
       child: Card(
+        elevation: 0.3,
         color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20),
@@ -24,6 +26,9 @@ class DescriptionButton extends StatelessWidget {
                   const Icon(
                     Icons.play_circle,
                     color: Colors.red,
+                  ),
+                  const SizedBox(
+                    width: 4,
                   ),
                   Text(name),
                 ],
@@ -41,6 +46,7 @@ class DescriptionButton extends StatelessWidget {
     );
   }
 }
+
 class Buttons extends StatelessWidget {
   final String text;
   final Color color;
@@ -57,13 +63,7 @@ class Buttons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.red,
-          duration: Duration(milliseconds: 500),
-          content: Text("Please select your course and ask questions"),
-        ),
-      ),
+      onTap: pressedButton,
       child: Material(
         elevation: 2,
         child: Container(
@@ -75,13 +75,74 @@ class Buttons extends StatelessWidget {
               Radius.circular(5),
             ),
           ),
-          child:  Center(
+          child: Center(
             child: Text(
               text,
               style: const TextStyle(color: Colors.white),
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class AltDescriptionButton extends StatelessWidget {
+  final String name;
+  final String time;
+  final int num;
+  const AltDescriptionButton(
+      {super.key, required this.name, required this.time, required this.num});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: null,
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.red),
+            borderRadius: const BorderRadius.all(Radius.circular(5))),
+        child:  Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "0${num.toString()}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 10,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          time,
+                          style: const TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const Icon(
+                  Icons.play_circle,
+                  color: Colors.red,
+                )
+              ],
+            )),
       ),
     );
   }

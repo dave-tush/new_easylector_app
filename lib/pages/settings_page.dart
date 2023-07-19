@@ -13,7 +13,10 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15,),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 15,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -21,7 +24,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.arrow_back),
-                  Text("Progress"),
+                  Text(
+                    "Progress",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Icon(
                     Icons.contact_page,
                     color: Colors.red,
@@ -47,30 +56,20 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 100,
+                        height: accountNames.length * 35,
                         child: ListView.builder(
-                          itemCount: 3,
+                          itemCount: accountNames.length,
                           itemBuilder: (BuildContext context, int index) =>
-                              const Padding(
-                            padding: EdgeInsets.only(bottom: 5.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Edit Account"),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.red,
-                                ),
-                              ],
-                            ),
-                          ),
+                              settingCard(accountNames[index], null),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               const Text(
                 "Notifications",
                 style: TextStyle(
@@ -84,13 +83,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     horizontal: 10.0,
                     vertical: 20,
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 50,
-                        child: NotificationListView(name: 'Edit Account',),
-                      ),
-                    ],
+                  child: SizedBox(
+                    height: notificationsName.length * 35,
+                    child: ListView.builder(
+                      itemCount: notificationsName.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          settingCard(notificationsName[index], null),
+                    ),
                   ),
                 ),
               ),
@@ -100,25 +99,49 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
+
+  List<String> notificationsName = [
+    "Edit Account",
+    "Edit Account",
+  ];
+  List<String> accountNames = [
+    "Edit Account",
+    "Edit Account",
+    "Edit Account",
+  ];
+  Padding settingCard(String text, pressedButton) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5.0),
+      child: InkWell(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(text),
+            Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.red,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class NotificationListView extends StatelessWidget {
   String name;
-final pressedButton;
-   NotificationListView(
-      {
-
+  final pressedButton;
+  NotificationListView({
     super.key,
-        required this.name,
-        this.pressedButton,
+    required this.name,
+    this.pressedButton,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: 2,
-      itemBuilder: (BuildContext context, int index) =>
-       Padding(
+      itemBuilder: (BuildContext context, int index) => Padding(
         padding: const EdgeInsets.only(bottom: 5.0),
         child: InkWell(
           child: Row(

@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import '../widgets/description_button.dart';
 
 class VideoAndAudioPage extends StatefulWidget {
-   VideoAndAudioPage({super.key});
+  VideoAndAudioPage({super.key});
 
   @override
   State<VideoAndAudioPage> createState() => _VideoAndAudioPageState();
   bool isFavourite = true;
+  List <bool> dimensions = List.filled(6, true);
 }
 
 class _VideoAndAudioPageState extends State<VideoAndAudioPage>
@@ -31,28 +32,28 @@ class _VideoAndAudioPageState extends State<VideoAndAudioPage>
       ),
     ];
     TabController tabController = TabController(length: 2, vsync: this);
-    bool dimensions = true;
     return Scaffold(
       appBar: AppBar(
-        title:  Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Icon(Icons.arrow_back),
             const Text("PHY 101"),
             InkWell(
-              onTap: (){
-                setState(() {
-                  widget.isFavourite = !widget.isFavourite;
-                });
-              },
-              child: widget.isFavourite? const Icon(
-                Icons.favorite,
-                color: Colors.red,
-              ) : const Icon(
-                Icons.favorite_border,
-                color: Colors.red,
-              )
-            )
+                onTap: () {
+                  setState(() {
+                    widget.isFavourite = !widget.isFavourite;
+                  });
+                },
+                child: widget.isFavourite
+                    ? const Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      )
+                    : const Icon(
+                        Icons.favorite_border,
+                        color: Colors.red,
+                      ))
           ],
         ),
       ),
@@ -64,44 +65,70 @@ class _VideoAndAudioPageState extends State<VideoAndAudioPage>
               controller: tabController,
               tabs: tabBarWidget,
             ),
-            SizedBox(
-              height: 600,
-              child: TabBarView(controller: tabController, children: [
-                Center(
-                  child: SizedBox(
-                    height: 550,
-                    child: ListView.builder(
-                      itemCount: name.length,
-                      itemBuilder: (BuildContext context, int index) => Column(
-                        children: [
-                          dimensions == false ?  DescriptionButton(
-                            name: name[index],
-                            time: "10:00",
-                          ) : Text("hello"),
-                          const SizedBox(
-                            height: 10,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20,),
+              child: SizedBox(
+                height: 600,
+                child: TabBarView(controller: tabController, children: [
+                  Column(
+                    children: [
+                      Image.asset("assets/images/book-g3ee54beb5_1920 1.png"),
+                      const SizedBox(height: 20,),
+                      Center(
+                        child: SizedBox(
+                          height: 500,
+                          child: ListView.builder(
+                            itemCount: name.length,
+                            itemBuilder: (BuildContext context, int index) =>
+                                InkWell(
+                                  onTap: (){
+                                    setState(() {
+                                      widget.dimensions[index] = !widget.dimensions[index];
+                                    });
+                                  },
+                                  child: Column(
+                              children: [
+                                  widget.dimensions[index]
+                                      ? DescriptionButton(
+                                          name: name[index],
+                                          time: "10:00",
+                                        )
+                                      : AltDescriptionButton(
+                                          name: name[index],
+                                          time: '10:00',
+                                          num: numb[index],
+                                        ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                              ],
+
+                            ),
+                                ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ),
-                const Center(
-                  child: Text("No Audio"),
-                ),
-              ]),
+                  const Center(
+                    child: Text("No Audio"),
+                  ),
+                ]),
+              ),
             ),
           ],
         ),
       ),
     );
   }
-  List<String> name =  [
+
+  List<int> numb = [01, 02, 03, 04, 05, 06];
+  List<String> name = [
     "Dimensions",
-    "Dimensions",
-    "Dimensions",
-    "Dimensions",
-    "Dimensions",
-    "Dimensions",
+    "Vectors",
+    "Motions",
+    "Waves",
+    "Heat",
+    "Friction",
   ];
 }

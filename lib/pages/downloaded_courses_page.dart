@@ -10,6 +10,22 @@ class DownloadedCoursesPage extends StatefulWidget {
 class _DownloadedCoursesPageState extends State<DownloadedCoursesPage> {
   @override
   Widget build(BuildContext context) {
+    List<String> subjects = [
+      "MTH 101",
+      "PHY 101",
+      "CHM 101",
+      "BIO 101",
+      "GNS 101",
+      "LIB 101",
+    ];
+    List <int> numberOfLessons = [
+      10,
+      20,
+      30,
+      40,
+      18,
+      5,
+    ];
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 75,
@@ -40,31 +56,30 @@ class _DownloadedCoursesPageState extends State<DownloadedCoursesPage> {
           child: Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height - 75,
+                height: MediaQuery.of(context).size.height - 50,
                 child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) => const Card(
+                  itemCount: subjects.length,
+                  itemBuilder: (BuildContext context, int index) => Card(
                     child: Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
                       child: Column(
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
+                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "MTH 101",
+                                    subjects[index],
                                     style: TextStyle(
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
-                                  Row(
+                                   Row(
                                     children: [
                                       Icon(
                                         Icons.play_circle,
@@ -73,21 +88,29 @@ class _DownloadedCoursesPageState extends State<DownloadedCoursesPage> {
                                       SizedBox(
                                         width: 5,
                                       ),
-                                      Text("18 Lessons"),
+                                      Text("${numberOfLessons[index]} Lessons"),
                                     ],
                                   ),
                                 ],
                               ),
-                              Icon(
-                                Icons.account_circle,
-                                color: Colors.red,
-                              )
+                              for (int i = 0; i < circleImages.length; i++)
+                                Align(
+                                  widthFactor: 0.5,
+                                  child: CircleAvatar(
+                                    radius: 10,
+                                    child: CircleAvatar(
+                                      radius: 9,
+                                      backgroundImage:
+                                          AssetImage(circleImages[i].toString()),
+                                    ),
+                                  ),
+                                )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
-                            ),
-                          LinearProgressIndicator(
+                          ),
+                          const LinearProgressIndicator(
                             minHeight: 10,
                             color: Colors.red,
                             value: 0.1,
@@ -99,9 +122,16 @@ class _DownloadedCoursesPageState extends State<DownloadedCoursesPage> {
                 ),
               ),
             ],
-            ),
+          ),
         ),
       ),
     );
   }
+
+  List circleImages = [
+    "assets/images/book-g3ee54beb5_1920 1.png",
+    "assets/images/book-g3ee54beb5_1920 1.png",
+    "assets/images/book-g3ee54beb5_1920 1.png",
+    "assets/images/book-g3ee54beb5_1920 1.png"
+  ];
 }
