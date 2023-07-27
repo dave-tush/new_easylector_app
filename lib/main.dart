@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'Intro page/Intro_page.dart';
+import 'package:new_easylector_app/Pages/General_page.dart';
+import 'package:provider/provider.dart';
 import 'foundation/theme house/theme.dart';
-import 'intro page/just.dart';
-
-
 
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -12,10 +9,8 @@ Future<void> main() async {
   //   DeviceOrientation.portraitUp,
   //   DeviceOrientation.portraitDown,
   // ]);
-  runApp(const MyApp());
+  runApp(MyApp());
 }
-
-
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -25,27 +20,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
-    create: (context) => ThemeProvider(),
-    builder: (context, _) {
-      final themeProvider = Provider.of<ThemeProvider>(context);
+        create: (context) => ThemeProvider(),
+        builder: (context, _) {
+          final themeProvider = Provider.of<ThemeProvider>(context);
 
-
-
-
-
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        themeMode: themeProvider.themeMode,
-        theme: MyThemes.lightTheme,
-        darkTheme: MyThemes.darkTheme,
-       home: Intro(),
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            themeMode: themeProvider.themeMode,
+            theme: MyThemes.lightTheme,
+            darkTheme: MyThemes.darkTheme,
+            home: General_page(),
+          );
+        },
       );
-    },
-  );
 }
-
-
-

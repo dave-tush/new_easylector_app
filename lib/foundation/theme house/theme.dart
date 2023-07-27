@@ -42,17 +42,24 @@ class ThemeProvider extends ChangeNotifier {
 
 class MyThemes {
   static final darkTheme = ThemeData(
+    scaffoldBackgroundColor: Colors.grey.shade900,
+    colorScheme: ColorScheme.dark(),
+    primaryColor: Colors.white,
+    primaryColorDark: Colors.grey.shade900
 
 
 
   );
 
-
-
   static final lightTheme = ThemeData(
-
-
+      scaffoldBackgroundColor: Color.fromRGBO(246, 246, 246, 1.0),
+      colorScheme: ColorScheme.light(),
+      primaryColor: Colors.white,
+    primaryColorDark: MyColors.maincolor
 
   );
 }
+
+
+
 
