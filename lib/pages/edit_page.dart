@@ -10,7 +10,7 @@ class EditPage extends StatefulWidget {
 class _EditPageState extends State<EditPage> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -18,20 +18,28 @@ class _EditPageState extends State<EditPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.arrow_back,
                       color: Colors.red,
                     ),
-                    Text(
+                    const Text(
                       "Edit Profile",
                       style: TextStyle(fontSize: 20),
                     ),
-                    Icon(
-                      Icons.mark_chat_read,
-                      color: Colors.red,
+                    InkWell(
+                      onTap: () =>
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text("Profile edited successfully"),
+                            duration: Duration(milliseconds: 500),
+                      )),
+                      child: const Icon(
+                        Icons.check,
+                        color: Colors.red,
+                      ),
                     )
                   ],
                 ),
@@ -49,13 +57,18 @@ class _EditPageState extends State<EditPage> {
                   "Your Profile",
                   style: TextStyle(fontSize: 20),
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 textsFormFields("Name"),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 textsFormFields("Phone number"),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 textsFormFields("Email"),
-
               ],
             ),
           ),
@@ -64,40 +77,41 @@ class _EditPageState extends State<EditPage> {
     );
   }
 
-  TextFormField textsFormFields(String text,) {
+  TextFormField textsFormFields(
+    String text,
+  ) {
     return TextFormField(
-              style:  const TextStyle(
-                fontSize: 20,
-              ),
-              decoration:  InputDecoration(
-                filled: true,
-                fillColor:
-                Colors.grey[300],
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                      Radius.circular(10)),
-                  borderSide: BorderSide(
-                    // width: 2.0,
-                      color: Colors.grey.withOpacity(0.9)),
-                ),
-                focusedBorder:
-                // InputBorder.none,
-                OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                      Radius.circular(10)),
-                  borderSide: BorderSide(
-                      width: 2.0,
-                      color: Colors.grey.withOpacity(0.7)),
-                ),
-                // labelText: 'Enter your name',
-                hintText: text,
-                hintStyle: const TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16,
-                  color:
-                  Colors.black,
-                ),
-              ),
-            );
+      style: const TextStyle(
+        fontSize: 12,
+      ),
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.grey[300],
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderSide: BorderSide(
+            // width: 2.0,
+            color: Colors.grey.withOpacity(0.0),
+          ),
+        ),
+        focusedBorder:
+            // InputBorder.none,
+            OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10),
+          ),
+          borderSide: BorderSide(
+            width: 2.0,
+            color: Colors.grey.withOpacity(0.0),
+          ),
+        ),
+        // labelText: 'Enter your name',
+        hintText: text,
+        hintStyle: TextStyle(
+          fontWeight: FontWeight.normal,
+          color: Colors.grey[800],
+        ),
+      ),
+    );
   }
 }

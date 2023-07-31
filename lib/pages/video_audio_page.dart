@@ -34,89 +34,99 @@ class _VideoAndAudioPageState extends State<VideoAndAudioPage>
     TabController tabController = TabController(length: 2, vsync: this);
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        toolbarHeight: 113,
+        title: Column(
           children: [
-            const Icon(Icons.arrow_back),
-            const Text("PHY 101"),
-            InkWell(
-                onTap: () {
-                  setState(() {
-                    widget.isFavourite = !widget.isFavourite;
-                  });
-                },
-                child: widget.isFavourite
-                    ? const Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                      )
-                    : const Icon(
-                        Icons.favorite_border,
-                        color: Colors.red,
-                      ))
-          ],
-        ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
+            SizedBox(height: 20,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Icon(Icons.arrow_back),
+                const Text("PHY 101"),
+                InkWell(
+                    onTap: () {
+                      setState(() {
+                        widget.isFavourite = !widget.isFavourite;
+                      });
+                    },
+                    child: widget.isFavourite
+                        ? const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          )
+                        : const Icon(
+                            Icons.favorite_border,
+                            color: Colors.red,
+                          ))
+              ],
+            ),
+            SizedBox(height: 28,),
             TabBar(
               indicatorColor: Colors.red,
               controller: tabController,
               tabs: tabBarWidget,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20,),
-              child: SizedBox(
-                height: 600,
-                child: TabBarView(controller: tabController, children: [
-                  Column(
-                    children: [
-                      Image.asset("assets/images/book-g3ee54beb5_1920 1.png"),
-                      const SizedBox(height: 20,),
-                      Center(
-                        child: SizedBox(
-                          height: 500,
-                          child: ListView.builder(
-                            itemCount: name.length,
-                            itemBuilder: (BuildContext context, int index) =>
-                                InkWell(
-                                  onTap: (){
-                                    setState(() {
-                                      widget.dimensions[index] = !widget.dimensions[index];
-                                    });
-                                  },
-                                  child: Column(
-                              children: [
-                                  widget.dimensions[index]
-                                      ? DescriptionButton(
-                                          name: name[index],
-                                          time: "10:00",
-                                        )
-                                      : AltDescriptionButton(
-                                          name: name[index],
-                                          time: '10:00',
-                                          num: numb[index],
-                                        ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                              ],
-
-                            ),
-                                ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Center(
-                    child: Text("No Audio"),
-                  ),
-                ]),
-              ),
+              indicatorSize: TabBarIndicatorSize.tab,
             ),
           ],
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20,),
+                child: SizedBox(
+                  height: 700,
+                  child: TabBarView(controller: tabController, children: [
+                    Column(
+                      children: [
+                        Image.asset("assets/images/book-g3ee54beb5_1920 1.png"),
+                        const SizedBox(height: 20,),
+                        Center(
+                          child: SizedBox(
+                            height: 400,
+                            child: ListView.builder(
+                              itemCount: name.length,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  InkWell(
+                                    onTap: (){
+                                      setState(() {
+                                        widget.dimensions[index] = !widget.dimensions[index];
+                                      });
+                                    },
+                                    child: Column(
+                                children: [
+                                    widget.dimensions[index]
+                                        ? DescriptionButton(
+                                            name: name[index],
+                                            time: "10:00",
+                                          )
+                                        : AltDescriptionButton(
+                                            name: name[index],
+                                            time: '10:00',
+                                            num: numb[index],
+                                          ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                ],
+
+                              ),
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Center(
+                      child: Text("No Audio"),
+                    ),
+                  ]),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

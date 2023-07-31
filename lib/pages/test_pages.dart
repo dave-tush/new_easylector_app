@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../widgets/description_button.dart';
@@ -10,6 +12,18 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
+  static  int maxSeconds = 30;
+  late Timer timer;
+  void startTimer(){
+    timer = Timer.periodic(const Duration(minutes: 30),(_) {
+     if (maxSeconds > 0) {
+       setState(() {
+         maxSeconds--;
+         print("Started");
+       });
+     }
+    });
+  }
   bool isTrue = false;
   // List <bool> isTrue =  [];
   int numberOfQuestions = 1;
@@ -40,15 +54,14 @@ class _TestPageState extends State<TestPage> {
             children: [
               Text(
                 "$numberOfQuestions/35",
-                // "01/35",
                 style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
                     fontSize: 20),
               ),
-              const Text(
-                "20:23",
-                style: TextStyle(
+               Text(
+                "$maxSeconds",
+                style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
                     fontSize: 20),
@@ -128,7 +141,7 @@ class _TestPageState extends State<TestPage> {
               ? Buttons(
                   text: 'NEXT',
                   color: Colors.white,
-                  pressedButton: texts,
+                  pressedButton: startTimer,
                   // linerProgressIcon,
                   buttonColor: Colors.red,
                 )

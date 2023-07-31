@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_easylector_app/pages/edit_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -10,6 +11,13 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
+    List accountName = [
+      "Edit Account",
+      "Change Password",
+      "Privacy & Security",
+      "App Notification",
+      "Notification",
+    ];
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -32,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                   Icon(
-                    Icons.contact_page,
+                    Icons.account_circle,
                     color: Colors.red,
                   )
                 ],
@@ -88,7 +96,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     child: ListView.builder(
                       itemCount: notificationsName.length,
                       itemBuilder: (BuildContext context, int index) =>
-                          settingCard(notificationsName[index], null),
+                          settingCard(
+                        notificationsName[index],
+                            newPressedButton,
+                      ),
                     ),
                   ),
                 ),
@@ -101,18 +112,25 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   List<String> notificationsName = [
-    "Edit Account",
-    "Edit Account",
+    "App Notification",
+    "Notification",
   ];
   List<String> accountNames = [
     "Edit Account",
-    "Edit Account",
-    "Edit Account",
+    "Change Password",
+    "Privacy & Security",
   ];
+  newPressedButton(){
+         Navigator.push(
+        context,
+        MaterialPageRoute(
+        builder: (BuildContext context) => const EditPage()));
+  }
   Padding settingCard(String text, pressedButton) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 5.0),
       child: InkWell(
+        onTap: pressedButton,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
