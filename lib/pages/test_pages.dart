@@ -12,20 +12,25 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
-  static  int maxSeconds = 30;
-  late Timer timer;
-  void startTimer(){
-    timer = Timer.periodic(const Duration(minutes: 30),(_) {
-     if (maxSeconds > 0) {
-       setState(() {
-         maxSeconds--;
-         print("Started");
-       });
-     }
+  int _counter = 30;
+  late Timer _timer;
+
+  void _startTimer() {
+    _counter = 30;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_counter > 0) {
+        setState(() {
+          _counter--;
+        });
+      } else {
+        _timer.cancel();
+      }
     });
   }
-  bool isTrue = false;
+  final Map<String, bool> _map = {};
+  bool isTrue = true;
   // List <bool> isTrue =  [];
+  List<bool> newTrue = List.empty(growable: true);
   int numberOfQuestions = 1;
   double values = 0.0285714285714286;
   void texts() {
@@ -59,8 +64,8 @@ class _TestPageState extends State<TestPage> {
                     fontWeight: FontWeight.bold,
                     fontSize: 20),
               ),
-               Text(
-                "$maxSeconds",
+              Text(
+                "$_counter",
                 style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
@@ -122,7 +127,7 @@ class _TestPageState extends State<TestPage> {
           const SizedBox(
             height: 20,
           ),
-          Container(
+          SizedBox(
             height: 200,
             child: ListView.builder(
                 itemCount: 4,
@@ -141,7 +146,7 @@ class _TestPageState extends State<TestPage> {
               ? Buttons(
                   text: 'NEXT',
                   color: Colors.white,
-                  pressedButton: startTimer,
+                  pressedButton: _startTimer,
                   // linerProgressIcon,
                   buttonColor: Colors.red,
                 )
@@ -171,10 +176,26 @@ class _TestPageState extends State<TestPage> {
       backgroundColor: const Color(0XFFF6F6F6),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
-            child: voidLoop(),
-          ),
+          child: _counter <= 30 && _counter > 0
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 20.0, horizontal: 10),
+                  child: voidLoop(),
+                )
+              : Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  children: [
+                    Text("TIME UP!!!"),
+                    Buttons(
+                      text: "Check Results",
+                      color: Colors.white,
+                      pressedButton: () {},
+                      buttonColor: Colors.red,
+                    )
+                  ],
+                ),
+              ),
         ),
       ),
     );
