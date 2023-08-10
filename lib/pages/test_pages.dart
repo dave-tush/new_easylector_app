@@ -12,11 +12,27 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
-  int _counter = 30;
+  int numberOfQuestions = 1;
+  int _counter = 60;
+  int _minutesCounter = 02;
   late Timer _timer;
-
+  void _generalTimer(){
+    _minutesTimer();
+    _startTimer();
+  }
+  void _minutesTimer (){
+    _minutesCounter = _minutesCounter;
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+      if (_minutesCounter > 0){
+        setState(() {
+         _minutesCounter--;
+         print(_minutesCounter);
+        });
+      }
+    });
+  }
   void _startTimer() {
-    _counter = 30;
+    _counter = _counter;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_counter > 0) {
         setState(() {
@@ -28,10 +44,8 @@ class _TestPageState extends State<TestPage> {
     });
   }
   final Map<String, bool> _map = {};
-  bool isTrue = true;
-  // List <bool> isTrue =  [];
+  bool  isTrue = true;
   List<bool> newTrue = List.empty(growable: true);
-  int numberOfQuestions = 1;
   double values = 0.0285714285714286;
   void texts() {
     setState(() {
@@ -65,7 +79,7 @@ class _TestPageState extends State<TestPage> {
                     fontSize: 20),
               ),
               Text(
-                "$_counter",
+              "$_minutesCounter:$_counter",
                 style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
@@ -146,7 +160,8 @@ class _TestPageState extends State<TestPage> {
               ? Buttons(
                   text: 'NEXT',
                   color: Colors.white,
-                  pressedButton: _startTimer,
+                  pressedButton: _generalTimer,
+                  // texts,
                   // linerProgressIcon,
                   buttonColor: Colors.red,
                 )
@@ -176,7 +191,7 @@ class _TestPageState extends State<TestPage> {
       backgroundColor: const Color(0XFFF6F6F6),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: _counter <= 30 && _counter > 0
+          child: _minutesCounter == _minutesCounter && _counter <= _counter && _counter > 0
               ? Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 20.0, horizontal: 10),
@@ -186,7 +201,7 @@ class _TestPageState extends State<TestPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   children: [
-                    Text("TIME UP!!!"),
+                    const Text("TIME UP!!!"),
                     Buttons(
                       text: "Check Results",
                       color: Colors.white,

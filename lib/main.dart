@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_easylector_app/pages/bar_graph.dart';
 import 'package:new_easylector_app/pages/detail_page.dart';
 import 'package:new_easylector_app/pages/downloaded_courses_page.dart';
 import 'package:new_easylector_app/pages/edit_page.dart';
@@ -18,20 +19,33 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    List<double> weeklySummery = [
+      10.32,
+      4.56,
+      3.54,
+      20.56,
+      2.11,
+      9.80,
+      8.22,
+    ];
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: //VideoAndAudioPage()
-          //DownloadedCoursesPage()
-          // EditPage()
-          //SettingsPage(),
-          // CountdownTimerDemo()
-          TestPage(),
-         // DetailsPage(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+         home:
+      // BarGraph(
+        //   weeklySummery: weeklySummery,
+        // )
+        //VideoAndAudioPage()
+        //DownloadedCoursesPage()
+        // EditPage()
+        //SettingsPage(),
+        // CountdownTimerDemo()
+        TestPage(),
+        // DetailsPage(),
+        );
   }
 }

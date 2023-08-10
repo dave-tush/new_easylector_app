@@ -100,7 +100,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       itemCount: topics.length,
                       itemBuilder: (BuildContext context, int index) => Column(
                             children: [
-                              DescriptionButton(
+                                DescriptionButton(
                                 name: topics[index],
                                 time: time[index],
                               ),
