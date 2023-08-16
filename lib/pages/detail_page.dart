@@ -10,13 +10,13 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-
   bool isTapped = false;
-  void favouriteButton (){
+  void favouriteButton() {
     setState(() {
       isTapped = !isTapped;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,10 @@ class _DetailsPageState extends State<DetailsPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Icon(Icons.arrow_back),
+                    InkWell(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(Icons.arrow_back),
+                    ),
                     const Text(
                       "Details",
                       style: TextStyle(
@@ -100,7 +103,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       itemCount: topics.length,
                       itemBuilder: (BuildContext context, int index) => Column(
                             children: [
-                                DescriptionButton(
+                              DescriptionButton(
                                 name: topics[index],
                                 time: time[index],
                               ),
