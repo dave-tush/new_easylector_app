@@ -5,19 +5,29 @@ import '../foundation/text_widget/Big_text.dart';
 import '../foundation/text_widget/Small_text.dart';
 
 class Signup_page extends StatefulWidget {
+
+
   const Signup_page({Key? key}) : super(key: key);
 
   @override
   State<Signup_page> createState() => _Create_EmailState();
 }
 
+bool isVisiblePassword = true;
+bool isVisibleConfirmPassword = true;
+
 class _Create_EmailState extends State<Signup_page> with RegisterAuth{
+
+
+
+
   @override
   Widget build(BuildContext context) {
-
     var sizes = MediaQuery.of(context).size;
     var H = sizes.height;
     var W = sizes.width;
+
+
 
     return Scaffold(
       body: SafeArea(
@@ -33,54 +43,54 @@ class _Create_EmailState extends State<Signup_page> with RegisterAuth{
                       height: W/8,
                     ),
                     Padding(
-                        padding: const  EdgeInsets.symmetric(vertical: 10),
-                    child: Container(
-                      // width: 236,
-                      width: W,
-                      height: W/15,
-                      child: Bigtext(text: "Welcome to easylector", space: 0, fontsize: 23, color: MyColors.maincolor,textAlign: TextAlign.center,),
-                    ),
-                    ),
-
-                    Padding(
-                        padding: const  EdgeInsets.symmetric(vertical: 10),
-                    child: Column(
-                      children: [
-                        Smalltext(text: "Create an account", fontsize: 15, space:1, textAlign: TextAlign.center,),
-
-                        Smalltext(text: "by filling in your detail", fontsize: 15, space:1, textAlign: TextAlign.center,),
-                      ],
-                    ),
+                      padding: const  EdgeInsets.symmetric(vertical: 10),
+                      child: Container(
+                        // width: 236,
+                        width: W,
+                        height: W/15,
+                        child: Bigtext(text: "Welcome to easylector", space: 0, fontsize: 23, color: MyColors.maincolor,textAlign: TextAlign.center,),
+                      ),
                     ),
 
                     Padding(
-                        padding: const  EdgeInsets.symmetric(vertical: 5),
+                      padding: const  EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
+                        children: [
+                          Smalltext(text: "Create an account", fontsize: 15, space:1, textAlign: TextAlign.center,),
+
+                          Smalltext(text: "by filling in your detail", fontsize: 15, space:1, textAlign: TextAlign.center,),
+                        ],
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const  EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
-                        decoration: buildInputDecoration("Full name"),
+                        decoration: buildInputDecoration("Full name", false),
                         validator: InputValidator.emptyCheck("Full name can't be empty"),
                       ),
                     ),
 
                     Padding(
-                        padding: const  EdgeInsets.symmetric(vertical: 5),
-                    child: TextFormField(
-                      decoration: buildInputDecoration("Email"),
-                      validator: InputValidator.email,
-                    ),
-                    ),
-
-                    Padding(
-                        padding: const  EdgeInsets.symmetric(vertical: 5),
-                    child:TextFormField(
-                      decoration: buildInputDecoration("Username"),
-                      validator: InputValidator.emptyCheck("Username can't be empty"),
-                    ),
-                    ),
-
-                    Padding(
-                        padding: const  EdgeInsets.symmetric(vertical: 5),
+                      padding: const  EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
-                        obscureText: visiblePassword,
+                        decoration: buildInputDecoration("Email", false),
+                        validator: InputValidator.email,
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const  EdgeInsets.symmetric(vertical: 5),
+                      child:TextFormField(
+                        decoration: buildInputDecoration("Username", false),
+                        validator: InputValidator.emptyCheck("Username can't be empty"),
+                      ),
+                    ),
+
+                    Padding(
+                      padding:   EdgeInsets.symmetric(vertical: 5),
+                      child: TextFormField(
+                        obscureText: isVisiblePassword,
                         decoration: buildInputDecoration("Password", true),
                         validator: InputValidator.password,
                         onChanged: (t) {
@@ -90,9 +100,9 @@ class _Create_EmailState extends State<Signup_page> with RegisterAuth{
                     ),
 
                     Padding(
-                        padding: const  EdgeInsets.symmetric(vertical: 5),
+                      padding:  EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
-                        obscureText: visiblePassword,
+                        obscureText: isVisibleConfirmPassword,
                         decoration: buildInputDecoration("Confirm Password", true),
                         validator: InputValidator.password,
                         onChanged: (t) {
@@ -239,25 +249,58 @@ class _Create_EmailState extends State<Signup_page> with RegisterAuth{
 
 
 
-  InputDecoration buildInputDecoration(hintText, [eyeVisible = false]) {
+
+
+  InputDecoration buildInputDecoration(hintText, bool eyeVisible ) {
     var outlineInputBorder = OutlineInputBorder(
         borderSide: BorderSide(color: Colors.grey.withOpacity(0.2)),
         borderRadius: BorderRadius.circular(10)
     );
 
     return InputDecoration(
-      suffixIcon: eyeVisible ? IconButton(
+      suffixIcon: hintText == "Password"
+          ? IconButton(
+          icon: Icon(
+            isVisiblePassword ? Icons.visibility : Icons.visibility_off,
+            color: Colors.grey,
+          ),
+          onPressed: (){
+            setState(() {
+              isVisiblePassword = !isVisiblePassword;
+            });
+          }
+      ) : hintText == "Confirm Password"
+          ? IconButton(
         icon: Icon(
-          visiblePassword ? Icons.visibility : Icons.visibility_off,
+          isVisibleConfirmPassword ? Icons.visibility : Icons.visibility_off,
           color: Colors.grey,
         ),
-        onPressed: () {
+        onPressed: (){
           setState(() {
-            visiblePassword = !visiblePassword;
+            isVisibleConfirmPassword = !isVisibleConfirmPassword;
           });
         },
-      )
-          : const SizedBox.shrink(),
+      ) : SizedBox.shrink(),
+
+
+
+      // suffixIcon: eyeVisible ? IconButton(
+      //   icon: Icon(
+      //     isVisiblePassword ? Icons.visibility : Icons.visibility_off,
+      //     color: Colors.grey,
+      //   ),
+      //   onPressed: () {
+      //     setState(() {
+      //       if (hintText == "Password"){
+      //         isVisiblePassword = !isVisiblePassword;
+      //       } else if (hintText == "Confirm Password") {
+      //         isVisibleConfirmPassword = !isVisibleConfirmPassword;
+      //       }
+      //     });
+      //   },
+      // )
+      //     : SizedBox.shrink(),
+
 
       hintText: hintText,
       contentPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -269,7 +312,6 @@ class _Create_EmailState extends State<Signup_page> with RegisterAuth{
       ),
     );
   }
-
 
 
   @override
@@ -296,7 +338,6 @@ class _Create_EmailState extends State<Signup_page> with RegisterAuth{
 mixin RegisterAuth {
   GlobalKey<FormState> _formKey = GlobalKey();
   bool rememberMe = false;
-  bool visiblePassword = false;
   bool isLoading = false;
   Future register();
 }
@@ -329,6 +370,7 @@ class InputValidator {
     return null;
   }
 }
+
 
 
 
