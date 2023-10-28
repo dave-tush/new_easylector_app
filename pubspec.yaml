@@ -40,6 +40,10 @@ dependencies:
   intl_phone_field: ^3.1.0
   dots_indicator: ^3.0.0
   flutter_staggered_animations: ^1.1.1
+  fl_chart: ^0.61.0
+#  cloud_firestore: ^4.12.1
+  firebase_core: ^2.20.0
+  firebase_auth: ^4.12.0
 
 
 

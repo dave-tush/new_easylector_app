@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "948328601920",
-    "project_id": "e-learning-35c5e",
-    "storage_bucket": "e-learning-35c5e.appspot.com"
+    "project_number": "352982971197",
+    "project_id": "e-learning2-f1a6e",
+    "storage_bucket": "e-learning2-f1a6e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:948328601920:android:f28ae731e65c2e36ecc2a5",
+        "mobilesdk_app_id": "1:352982971197:android:91aaceee47c85954f30b54",
         "android_client_info": {
           "package_name": "com.example.new_easylector_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD8cmtzetafg5ijypMUfv9MUqICDo_ST1w"
+          "current_key": "AIzaSyDPdHcJKyjhspjozdUZSuM2KNGdT715dOA"
         }
       ],
       "services": {
