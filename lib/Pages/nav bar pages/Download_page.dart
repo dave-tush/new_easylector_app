@@ -20,8 +20,6 @@ class _Download_pageState extends State<Download_page> {
   @override
   Widget build(BuildContext context) {
     double Size = MediaQuery.of(context).size.width;
-
-    List levels = [0.19, 0.2, 0.5, 0.4, 0.7, 0.2];
     List sub = [
       'MTH101',
       'BIO101',
@@ -75,9 +73,7 @@ class _Download_pageState extends State<Download_page> {
       ),
     );
   }
-  
-  
-  
+
 
   Widget _buildPageItem(int index) {
     double Size = MediaQuery.of(context).size.width;

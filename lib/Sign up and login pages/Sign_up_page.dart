@@ -5,8 +5,6 @@ import '../foundation/text_widget/Big_text.dart';
 import '../foundation/text_widget/Small_text.dart';
 
 class Signup_page extends StatefulWidget {
-
-
   const Signup_page({Key? key}) : super(key: key);
 
   @override
@@ -16,18 +14,12 @@ class Signup_page extends StatefulWidget {
 bool isVisiblePassword = true;
 bool isVisibleConfirmPassword = true;
 
-class _Create_EmailState extends State<Signup_page> with RegisterAuth{
-
-
-
-
+class _Create_EmailState extends State<Signup_page> with RegisterAuth {
   @override
   Widget build(BuildContext context) {
     var sizes = MediaQuery.of(context).size;
     var H = sizes.height;
     var W = sizes.width;
-
-
 
     return Scaffold(
       body: SafeArea(
@@ -40,55 +32,67 @@ class _Create_EmailState extends State<Signup_page> with RegisterAuth{
                 child: Column(
                   children: [
                     SizedBox(
-                      height: W/8,
+                      height: W / 8,
                     ),
                     Padding(
-                      padding: const  EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Container(
                         // width: 236,
                         width: W,
-                        height: W/15,
-                        child: Bigtext(text: "Welcome to easylector", space: 0, fontsize: 23, color: MyColors.maincolor,textAlign: TextAlign.center,),
+                        height: W / 15,
+                        child: Bigtext(
+                          text: "Welcome to easylector",
+                          space: 0,
+                          fontsize: 23,
+                          color: MyColors.maincolor,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-
                     Padding(
-                      padding: const  EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Column(
                         children: [
-                          Smalltext(text: "Create an account", fontsize: 15, space:1, textAlign: TextAlign.center,),
-
-                          Smalltext(text: "by filling in your detail", fontsize: 15, space:1, textAlign: TextAlign.center,),
+                          Smalltext(
+                            text: "Create an account",
+                            fontsize: 15,
+                            space: 1,
+                            textAlign: TextAlign.center,
+                          ),
+                          Smalltext(
+                            text: "by filling in your detail",
+                            fontsize: 15,
+                            space: 1,
+                            textAlign: TextAlign.center,
+                          ),
                         ],
                       ),
                     ),
-
                     Padding(
-                      padding: const  EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
                         decoration: buildInputDecoration("Full name", false),
-                        validator: InputValidator.emptyCheck("Full name can't be empty"),
+                        validator: InputValidator.emptyCheck(
+                            "Full name can't be empty"),
                       ),
                     ),
-
                     Padding(
-                      padding: const  EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
                         decoration: buildInputDecoration("Email", false),
                         validator: InputValidator.email,
                       ),
                     ),
-
                     Padding(
-                      padding: const  EdgeInsets.symmetric(vertical: 5),
-                      child:TextFormField(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: TextFormField(
                         decoration: buildInputDecoration("Username", false),
-                        validator: InputValidator.emptyCheck("Username can't be empty"),
+                        validator: InputValidator.emptyCheck(
+                            "Username can't be empty"),
                       ),
                     ),
-
                     Padding(
-                      padding:   EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
                         obscureText: isVisiblePassword,
                         decoration: buildInputDecoration("Password", true),
@@ -98,26 +102,21 @@ class _Create_EmailState extends State<Signup_page> with RegisterAuth{
                         },
                       ),
                     ),
-
                     Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
                         obscureText: isVisibleConfirmPassword,
-                        decoration: buildInputDecoration("Confirm Password", true),
+                        decoration:
+                            buildInputDecoration("Confirm Password", true),
                         validator: InputValidator.password,
                         onChanged: (t) {
                           InputValidator.confirmPasswordText = t;
                         },
                       ),
-
                     ),
-
-
-
-                    Container (
-                      width: W/1.07,
-                      height: W/9,
-
+                    Container(
+                      width: W / 1.07,
+                      height: W / 9,
                       child: ElevatedButton(
                         onPressed: () {
                           register();
@@ -128,11 +127,10 @@ class _Create_EmailState extends State<Signup_page> with RegisterAuth{
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        child:  Text("Sign up", style: TextStyle(color: Colors.white)),
+                        child: Text("Sign up",
+                            style: TextStyle(color: Colors.white)),
                       ),
                     ),
-
-
                     Padding(
                       padding: const EdgeInsets.all(25),
                       child: Row(
@@ -140,91 +138,105 @@ class _Create_EmailState extends State<Signup_page> with RegisterAuth{
                         children: [
                           Container(
                             height: 1.5,
-                            width: W/3,
+                            width: W / 3,
                             color: Colors.black,
                           ),
-
                           Container(
-                            child: Smalltext(text: 'OR', fontsize: 15, space: 0,),
+                            child: Smalltext(
+                              text: 'OR',
+                              fontsize: 15,
+                              space: 0,
+                            ),
                           ),
-
                           Container(
                             height: 1.5,
-                            width: W/3,
+                            width: W / 3,
                             color: Colors.black,
                           ),
                         ],
                       ),
                     ),
-
-
-
                     Padding(
                       padding: const EdgeInsets.all(5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-
                           Container(
-                            height: H/14,
-                            width: W/7,
-                            child:  MaterialButton(
+                            height: H / 14,
+                            width: W / 7,
+                            child: MaterialButton(
                                 padding: const EdgeInsets.all(5),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),
-                                child: Image(image: AssetImage("assets/images/slider/google.png"), fit: BoxFit.cover,),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(25))),
+                                child: Image(
+                                  image: AssetImage(
+                                      "assets/images/slider/google.png"),
+                                  fit: BoxFit.cover,
+                                ),
                                 onPressed: () {}),
                           ),
-
-
                           Container(
-                            height: H/18,
-                            width: W/8.5,
-                            child:  MaterialButton(
+                            height: H / 18,
+                            width: W / 8.5,
+                            child: MaterialButton(
                                 padding: const EdgeInsets.all(5),
                                 color: MyColors.fb_blue,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),
-                                child: Image(image: AssetImage("assets/images/slider/fb1.png"), fit: BoxFit.cover,),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(25))),
+                                child: const Image(
+                                  image: AssetImage(
+                                      "assets/images/slider/fb1.png"),
+                                  fit: BoxFit.cover,
+                                ),
                                 onPressed: () {}),
                           ),
-
-
-
                           Container(
-                            height: H/14,
-                            width: W/7,
-                            child:  MaterialButton(
+                            height: H / 14,
+                            width: W / 7,
+                            child: MaterialButton(
                                 padding: const EdgeInsets.all(5),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),
-                                child: Image(image: AssetImage("assets/images/slider/apple.png"), fit: BoxFit.cover,),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(25))),
+                                child: const Image(
+                                  image: AssetImage(
+                                      "assets/images/slider/apple.png"),
+                                  fit: BoxFit.cover,
+                                ),
                                 onPressed: () {}),
                           ),
                         ],
                       ),
                     ),
-
-
-
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 80),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Smalltext(text:"Already have an account ? ", fontsize: 14, space: 0,),
+                          Smalltext(
+                            text: "Already have an account ? ",
+                            fontsize: 14,
+                            space: 0,
+                          ),
                           GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => Login_page()),
+                                  MaterialPageRoute(
+                                      builder: (context) => const Login_page()),
                                 );
                               },
-                              child: Smalltext(text:"login", fontsize: 14, space: 0, color: Colors.red,)),
+                              child: Smalltext(
+                                text: "login",
+                                fontsize: 14,
+                                space: 0,
+                                color: Colors.red,
+                              )),
                         ],
                       ),
                     ),
-
-
-
-
                   ],
                 ),
               ),
@@ -235,84 +247,49 @@ class _Create_EmailState extends State<Signup_page> with RegisterAuth{
     );
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  InputDecoration buildInputDecoration(hintText, bool eyeVisible ) {
+  InputDecoration buildInputDecoration(hintText, bool eyeVisible) {
     var outlineInputBorder = OutlineInputBorder(
         borderSide: BorderSide(color: Colors.grey.withOpacity(0.2)),
-        borderRadius: BorderRadius.circular(10)
-    );
+        borderRadius: BorderRadius.circular(10));
 
     return InputDecoration(
       suffixIcon: hintText == "Password"
           ? IconButton(
-          icon: Icon(
-            isVisiblePassword ? Icons.visibility : Icons.visibility_off,
-            color: Colors.grey,
-          ),
-          onPressed: (){
-            setState(() {
-              isVisiblePassword = !isVisiblePassword;
-            });
-          }
-      ) : hintText == "Confirm Password"
-          ? IconButton(
-        icon: Icon(
-          isVisibleConfirmPassword ? Icons.visibility : Icons.visibility_off,
-          color: Colors.grey,
-        ),
-        onPressed: (){
-          setState(() {
-            isVisibleConfirmPassword = !isVisibleConfirmPassword;
-          });
-        },
-      ) : SizedBox.shrink(),
-
-
-
-      // suffixIcon: eyeVisible ? IconButton(
-      //   icon: Icon(
-      //     isVisiblePassword ? Icons.visibility : Icons.visibility_off,
-      //     color: Colors.grey,
-      //   ),
-      //   onPressed: () {
-      //     setState(() {
-      //       if (hintText == "Password"){
-      //         isVisiblePassword = !isVisiblePassword;
-      //       } else if (hintText == "Confirm Password") {
-      //         isVisibleConfirmPassword = !isVisibleConfirmPassword;
-      //       }
-      //     });
-      //   },
-      // )
-      //     : SizedBox.shrink(),
-
-
+              icon: Icon(
+                isVisiblePassword ? Icons.visibility : Icons.visibility_off,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                setState(() {
+                  isVisiblePassword = !isVisiblePassword;
+                });
+              })
+          : hintText == "Confirm Password"
+              ? IconButton(
+                  icon: Icon(
+                    isVisibleConfirmPassword
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isVisibleConfirmPassword = !isVisibleConfirmPassword;
+                    });
+                  },
+                )
+              : SizedBox.shrink(),
       hintText: hintText,
       contentPadding: EdgeInsets.symmetric(horizontal: 10),
       border: outlineInputBorder,
       enabledBorder: outlineInputBorder,
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: 0.5, color: MyColors.maincolor.withOpacity(0.6)),
+        borderSide:
+            BorderSide(width: 0.5, color: MyColors.maincolor.withOpacity(0.6)),
         borderRadius: BorderRadius.circular(10),
       ),
     );
   }
-
 
   @override
   Future register() async {
@@ -333,18 +310,13 @@ class _Create_EmailState extends State<Signup_page> with RegisterAuth{
   }
 }
 
-
-
 mixin RegisterAuth {
   GlobalKey<FormState> _formKey = GlobalKey();
   bool rememberMe = false;
   bool isLoading = false;
+
   Future register();
 }
-
-
-
-
 
 class InputValidator {
   static String? confirmPasswordText;
@@ -370,7 +342,3 @@ class InputValidator {
     return null;
   }
 }
-
-
-
-

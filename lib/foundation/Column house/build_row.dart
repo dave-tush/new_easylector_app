@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class RowBuilder extends StatelessWidget {
   final IndexedWidgetBuilder itemBuilder;
   final int itemCount;
@@ -13,10 +12,8 @@ class RowBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children:  List.generate(this.itemCount,
-              (index) => this.itemBuilder(context, index)).toList(),
+      children: List.generate(
+          this.itemCount, (index) => this.itemBuilder(context, index)).toList(),
     );
   }
 }
-
-

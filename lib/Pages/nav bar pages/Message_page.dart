@@ -38,7 +38,6 @@ class _Message_pageState extends State<Message_page> {
       ],
     );
 
-    List levels = [0.19, 0.2, 0.5, 0.4, 0.7, 0.22];
     List sub = [
       'MTH101',
       'BIO101',
@@ -46,14 +45,6 @@ class _Message_pageState extends State<Message_page> {
       'PHY101',
       'LIB101',
       'GNS101',
-    ];
-    List time = [
-      '8:30 PM',
-      '7:05 AM',
-      'Yesterday',
-      '6:30 PM',
-      '3:08 AM',
-      '12:30PM',
     ];
 
     return Scaffold(

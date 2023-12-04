@@ -1,10 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:new_easylector_app/foundation/theme%20house/theme.dart';
 import 'package:provider/provider.dart';
-
-
 
 class ChangeThemeButtonWidget extends StatelessWidget {
   @override

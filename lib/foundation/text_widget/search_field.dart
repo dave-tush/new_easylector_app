@@ -9,28 +9,40 @@ class Search_bar extends StatefulWidget {
 }
 
 class _Search_barState extends State<Search_bar> {
-
-  // This controller will store the value of the search bar
   final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
-    return TextField(
-      controller: _searchController,
-      decoration: InputDecoration(
-        hintText: 'Search for courses',
-        suffixIcon: IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () => _searchController.clear(),
-        ),
-        prefixIcon: IconButton(
-          icon: Icon(Icons.search, color: MyColors.maincolor,),
-          onPressed: () {
-          },
+    return Container(
+      
+      color: Colors.green,
+      child: TextField(
+        controller: _searchController,
+        cursorColor: MyColors.maincolor,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(3)
+          ),
+          prefixIcon: IconButton(
+            icon: Icon(Icons.search),
+            iconSize: 21,
+            color: MyColors.maincolor,
+            onPressed: () {},
+          ),
+          suffixIcon: IconButton(
+            icon: Icon(Icons.clear),
+            iconSize: 21,
+            color: Colors.grey,
+            onPressed: () => _searchController.clear()
+          ),
+            hintText:'Search for courses'
         ),
       ),
     );
   }
 }
+
 

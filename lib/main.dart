@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_easylector_app/Pages/General_page.dart';
+import 'package:flutter/services.dart';
+import 'package:new_easylector_app/intro%20page/Introduction_slide_page.dart';
 import 'package:provider/provider.dart';
 import 'foundation/theme house/theme.dart';
 
@@ -9,7 +10,7 @@ Future<void> main() async {
   //   DeviceOrientation.portraitUp,
   //   DeviceOrientation.portraitDown,
   // ]);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -31,8 +32,12 @@ class _MyAppState extends State<MyApp> {
             themeMode: themeProvider.themeMode,
             theme: MyThemes.lightTheme,
             darkTheme: MyThemes.darkTheme,
-            home: General_page(),
+            home: const Scaffold(
+              body: First_Intro_page(),
+            ),
           );
         },
       );
 }
+
+

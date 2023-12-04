@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:new_easylector_app/foundation/text_widget/Big_text.dart';
-import '../../foundation/Column house/build_column.dart';
-import '../../foundation/Column house/build_row.dart';
-import '../../foundation/color_house/colors.dart';
-
+import '../../../../foundation/Column house/build_column.dart';
+import '../../../../foundation/Column house/build_row.dart';
+import '../../../../foundation/color_house/colors.dart';
 
 class courses_under_homepage extends StatefulWidget {
   const courses_under_homepage({super.key});
@@ -17,11 +15,6 @@ class _courses_under_homepageState extends State<courses_under_homepage> {
   @override
   Widget build(BuildContext context) {
 
-    var sizes = MediaQuery.of(context).size;
-    var H = sizes.height;
-    var W = sizes.width;
-
-    List levels = [0.19, 0.2, 0.5, 0.4, 0.7, 0.2];
     List sub = ['MTH101','BIO101','CHM101','PHY101','LIB101','GNS101',];
 
     return ColumnBuilder(
@@ -40,7 +33,6 @@ class _courses_under_homepageState extends State<courses_under_homepage> {
     var H = sizes.height;
     var W = sizes.width;
 
-    List levels = [0.19, 0.2, 0.5, 0.4, 0.7, 0.2];
     List sub = ['MTH101','BIO101','CHM101','PHY101','LIB101','GNS101',];
 
     return Padding(
@@ -60,7 +52,7 @@ class _courses_under_homepageState extends State<courses_under_homepage> {
             height: H/7.2,
             decoration: BoxDecoration(
               color: Colors.grey.shade700,
-              borderRadius: BorderRadius.only(topLeft:Radius.circular(20),topRight: Radius.circular(20))
+              borderRadius: const BorderRadius.only(topLeft:Radius.circular(20),topRight: Radius.circular(20))
             ),
               ),
 
@@ -80,9 +72,7 @@ class _courses_under_homepageState extends State<courses_under_homepage> {
             right: W/1.56,
             child: Padding(
               padding: const EdgeInsets.all(10),
-              child: Container(
-                child: Bigtext(text: sub[index].toString(), space: 0, fontsize: 20),
-              ),
+              child: Bigtext(text: sub[index].toString(), space: 0, fontsize: 20),
             )),
 
             Positioned(
@@ -92,10 +82,10 @@ class _courses_under_homepageState extends State<courses_under_homepage> {
                 padding:const EdgeInsets.all(10),
                 child: RowBuilder(
                     itemBuilder: (BuildContext context, int index){
-                      return Container(
+                      return SizedBox(
                         height: W/19,
                         width: W/22,
-                        child: CircleAvatar(),
+                        child: const CircleAvatar(),
                       );
                       },
                     itemCount: 5),

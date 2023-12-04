@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:new_easylector_app/Pages/nav%20bar%20pages/Account_page.dart';
 import 'package:new_easylector_app/Pages/nav%20bar%20pages/Download_page.dart';
 import 'package:new_easylector_app/Pages/nav%20bar%20pages/Message_page.dart';
+import 'package:new_easylector_app/account_tester.dart';
 import 'package:new_easylector_app/foundation/color_house/colors.dart';
-import 'nav bar pages/Courses_page.dart';
-import 'nav bar pages/Home_page.dart';
+import 'nav bar pages/course/Courses_home_page.dart';
+import 'nav bar pages/home/Home_page.dart';
 
 class General_page extends StatefulWidget {
   const General_page({super.key});
@@ -51,7 +52,7 @@ class _General_pageState extends State<General_page> {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: _NavPages[_currentNavIndex],
-      bottomNavigationBar: bottomNavBar,
+     bottomNavigationBar: bottomNavBar,
     );
   }
 }

@@ -3,10 +3,8 @@ import 'package:flutter/scheduler.dart';
 
 import '../color_house/colors.dart';
 
-
 class ThemeProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.system;
-
 
   //bool get isDarkMode => themeMode == ThemeMode.dark;
 
@@ -19,10 +17,7 @@ class ThemeProvider extends ChangeNotifier {
     }
   }
 
-
-
   Future<void> ChangeTheme() async {
-
     if (themeMode == ThemeMode.light) {
       themeMode = ThemeMode.dark;
     } else {
@@ -31,35 +26,22 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
   void toggleTheme(bool isOn) {
     themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
   }
 }
 
-
 class MyThemes {
   static final darkTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.grey.shade900,
-    colorScheme: ColorScheme.dark(),
-    primaryColor: Colors.white,
-    primaryColorDark: Colors.grey.shade900
-
-
-
-  );
+      scaffoldBackgroundColor: Colors.grey.shade900,
+      colorScheme: ColorScheme.dark(),
+      primaryColor: Colors.white,
+      primaryColorDark: Colors.grey.shade900);
 
   static final lightTheme = ThemeData(
       scaffoldBackgroundColor: Color.fromRGBO(246, 246, 246, 1.0),
       colorScheme: ColorScheme.light(),
       primaryColor: Colors.white,
-    primaryColorDark: MyColors.maincolor
-
-  );
+      primaryColorDark: MyColors.maincolor);
 }
-
-
-
-
