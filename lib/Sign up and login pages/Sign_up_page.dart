@@ -1,9 +1,18 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:new_easylector_app/Sign%20up%20and%20login%20pages/login_page.dart';
 import 'package:new_easylector_app/config/theme.dart';
+import 'package:new_easylector_app/models/firebase_auth.dart';
+import '../Pages/General_page.dart';
 import '../foundation/color_house/colors.dart';
 import '../foundation/text_widget/Big_text.dart';
 import '../foundation/text_widget/Small_text.dart';
+import '../http.dart';
+import '../widgets/iconImageWidget.dart';
 
 class signup_page extends StatefulWidget {
   const signup_page({Key? key}) : super(key: key);
@@ -13,237 +22,212 @@ class signup_page extends StatefulWidget {
 }
 
 class _Create_EmailState extends State<signup_page> with RegisterAuth {
+  // final FirebaseAuthService _auth = FirebaseAuthService();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var sizes = MediaQuery.of(context).size;
     var H = sizes.height;
     var W = sizes.width;
+    // final newData = Http();
 
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Form(
-              key: _formKey,
-              child: Center(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: W / 8,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: SizedBox(
-                        // width: 236,
-                        width: W,
-                        height: W / 15,
-                        child: Bigtext(
-                          text: "Welcome to easylector",
-                          space: 0,
-                          fontsize: FontSizes.s24,
-                          color: MyColors.maincolor,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+      body: StreamBuilder(
+        builder: (context, snapShot) {
+          if (snapShot.connectionState ==  ConnectionState.waiting) {
+            return const Center (child: CircularProgressIndicator(),);
+          } else {
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Form(
+                    key: _formKey,
+                    child: Center(
                       child: Column(
                         children: [
-                          Smalltext(
-                            text: "Create an account",
-                            fontsize: FontSizes.s16,
-                            space: 1,
-                            textAlign: TextAlign.center,
-                          ),
-                          Smalltext(
-                            text: "by filling in your detail",
-                            fontsize: FontSizes.s16,
-                            space: 1,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                    TextFormField(
-                      decoration: buildInputDecoration("Full name"),
-                      validator:
-                          InputValidator.emptyCheck("Full name can't be empty"),
-                    ),
-                    const SizedBox(
-                      height: Insets.md,
-                    ),
-                    TextFormField(
-                      decoration: buildInputDecoration("Email"),
-                      validator: InputValidator.email,
-                    ),
-                    const SizedBox(
-                      height: Insets.md,
-                    ),
-                    TextFormField(
-                      decoration: buildInputDecoration("Username"),
-                      validator:
-                          InputValidator.emptyCheck("Username can't be empty"),
-                    ),
-                    const SizedBox(
-                      height: Insets.md,
-                    ),
-                    TextFormField(
-                      obscureText: visiblePassword,
-                      decoration: buildInputDecoration("Password", true),
-                      validator: InputValidator.password,
-                      onChanged: (t) {
-                        InputValidator.passwordText = t;
-                      },
-                    ),
-                    const SizedBox(
-                      height: Insets.md,
-                    ),
-                    TextFormField(
-                      obscureText: visiblePassword,
-                      decoration:
-                          buildInputDecoration("Confirm Password", true),
-                      validator: InputValidator.password,
-                      onChanged: (t) {
-                        InputValidator.confirmPasswordText = t;
-                      },
-                    ),
-                    const SizedBox(
-                      height: Insets.md,
-                    ),
-                    SizedBox(
-                      width: W / 1.07,
-                      height: W / 9,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          register();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: MyColors.maincolor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                        child: const Text(
-                          "Sign up",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            height: 1.5,
-                            width: W / 3,
-                            color: Colors.black,
-                          ),
-                          Smalltext(
-                            text: 'OR',
-                            fontsize: 15,
-                            space: 0,
-                          ),
-                          Container(
-                            height: 1.5,
-                            width: W / 3,
-                            color: Colors.black,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
                           SizedBox(
-                            height: H / 14,
-                            width: W / 7,
-                            child: MaterialButton(
-                                padding: const EdgeInsets.all(5),
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(25))),
-                                child: const Image(
-                                  image: AssetImage(
-                                      "assets/images/slider/google.png"),
-                                  fit: BoxFit.cover,
-                                ),
-                                onPressed: () {}),
+                            height: W / 8,
                           ),
-                          SizedBox(
-                            height: H / 18,
-                            width: W / 8.5,
-                            child: MaterialButton(
-                                padding: const EdgeInsets.all(5),
-                                color: MyColors.fb_blue,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(25))),
-                                child: const Image(
-                                  image: AssetImage(
-                                      "assets/images/slider/fb1.png"),
-                                  fit: BoxFit.cover,
-                                ),
-                                onPressed: () {}),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: SizedBox(
+                              // width: 236,
+                              width: W,
+                              height: W / 15,
+                              child: Bigtext(
+                                text: "Welcome to easy lector",
+                                space: 0,
+                                fontsize: FontSizes.s24,
+                                color: MyColors.maincolor,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
-                          Container(
-                            height: H / 14,
-                            width: W / 7,
-                            child: MaterialButton(
-                                padding: const EdgeInsets.all(5),
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(25))),
-                                child: const Image(
-                                  image: AssetImage(
-                                      "assets/images/slider/apple.png"),
-                                  fit: BoxFit.cover,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              children: [
+                                Smalltext(
+                                  text: "Create an account",
+                                  fontsize: FontSizes.s16,
+                                  space: 1,
+                                  textAlign: TextAlign.center,
                                 ),
-                                onPressed: () {}),
+                                Smalltext(
+                                  text: "by filling in your detail",
+                                  fontsize: FontSizes.s16,
+                                  space: 1,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: Insets.lg,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Smalltext(
-                          text: "Already have an account?",
-                          fontsize: 14,
-                          space: 0,
-                        ),
-                        const SizedBox(width: Insets.sm,),
-                        GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Login_page(),
-                                ),
-                              );
+                          // TextFormField(
+                          //   decoration: buildInputDecoration("Full name"),
+                          //   validator:
+                          //       InputValidator.emptyCheck("Full name can't be empty"),
+                          // ),
+                          const SizedBox(
+                            height: Insets.md,
+                          ),
+                          TextFormField(
+                            controller: emailController,
+                            decoration: buildInputDecoration("Email"),
+                            validator: InputValidator.email,
+                          ),
+                          const SizedBox(
+                            height: Insets.md,
+                          ),
+                          TextFormField(
+                            controller: nameController,
+                            decoration: buildInputDecoration("Username"),
+                            validator:
+                            InputValidator.emptyCheck("Username can't be empty"),
+                          ),
+                          const SizedBox(
+                            height: Insets.md,
+                          ),
+                          TextFormField(
+                            controller: passwordController,
+                            obscureText: visiblePassword,
+                            decoration: buildInputDecoration("Password", true),
+                            validator: InputValidator.password,
+                            onChanged: (t) {
+                              InputValidator.passwordText = t;
                             },
-                            child: Smalltext(
-                              text: "login",
-                              fontsize: 14,
-                              space: 0,
-                              color: Colors.red,
-                            )),
-                      ],
+                          ),
+                          const SizedBox(
+                            height: Insets.md,
+                          ),
+                          TextFormField(
+                            // controller: passwordController,
+                            obscureText: visiblePassword,
+                            decoration:
+                            buildInputDecoration("Confirm Password", true),
+                            validator: InputValidator.password,
+                            onChanged: (t) {
+                              InputValidator.confirmPasswordText = t;
+                            },
+                          ),
+                          const SizedBox(
+                            height: Insets.md,
+                          ),
+                          SizedBox(
+                            width: W / 1.07,
+                            height: W / 9,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                registerUser();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: MyColors.maincolor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              child: const Text(
+                                "Sign up",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(25),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  height: 1.5,
+                                  width: W / 3,
+                                  color: Colors.black,
+                                ),
+                                Smalltext(
+                                  text: 'OR',
+                                  fontsize: FontSizes.s16,
+                                  space: 0,
+                                ),
+                                Container(
+                                  height: 1.5,
+                                  width: W / 3,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              iconImage("assets/images/slider/google.png"),
+                              iconImage("assets/images/slider/fb1.png"),
+                              iconImage("assets/images/slider/apple.png"),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: Insets.lg,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Smalltext(
+                                text: "Already have an account?",
+                                fontsize: FontSizes.s14,
+                                space: 0,
+                              ),
+                              const SizedBox(
+                                width: Insets.sm,
+                              ),
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const LoginPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: Smalltext(
+                                    text: "login",
+                                    fontsize: FontSizes.s14,
+                                    space: 0,
+                                    color: Colors.red,
+                                  )),
+                            ],
+                          ),
+                          // CircularProgressIndicator()
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-      ),
+            );
+          }
+        }
+      , stream: null,)
+
     );
   }
 
@@ -251,15 +235,14 @@ class _Create_EmailState extends State<signup_page> with RegisterAuth {
     var outlineInputBorder = OutlineInputBorder(
         borderSide: BorderSide(color: Colors.grey.withOpacity(0.2)),
         borderRadius: Corners.smBorder);
-
     return InputDecoration(
       suffixIcon: eyeVisible
-          ? IconButton(
-              icon: Icon(
+          ? InkWell(
+              child: Icon(
                 visiblePassword ? Icons.visibility : Icons.visibility_off,
                 color: Colors.grey,
               ),
-              onPressed: () {
+              onTap: () {
                 setState(() {
                   visiblePassword = !visiblePassword;
                 });
@@ -276,6 +259,30 @@ class _Create_EmailState extends State<signup_page> with RegisterAuth {
         borderRadius: Corners.smBorder,
       ),
     );
+  }
+
+  Future<Widget> registerUser() async {
+     var data =
+    json.encode({
+      "userName": nameController.text,
+      "email": emailController.text,
+      "password": passwordController.text,
+    });
+    http.Response res = await http.post(
+      Uri.parse('http://192.168.137.1:5000/user/register'),
+      body: data,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        'Authorization': ""}
+    );
+    if (res.statusCode == 200) {
+      print("registered successful");
+      return const general_page();
+    } else {
+      return Container();
+      print("failed to register: ${res.reasonPhrase}");
+    }
   }
 
   @override
