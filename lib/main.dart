@@ -61,8 +61,9 @@ class MainPage extends StatelessWidget {
             // providers()
             // );
             // TestPage(subject: 'mth',)
-        // VideoPlayers(),
-            general_page()
+        VideoPlayers(),
+
+        //     general_page()
     );
   }
 }
