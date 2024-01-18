@@ -1,19 +1,71 @@
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:new_easylector_app/Sign%20up%20and%20login%20pages/Sign_up_page.dart';
+import 'package:new_easylector_app/data.dart';
+import 'package:new_easylector_app/models/signIn.dart';
+import '../Pages/General_page.dart';
 import '../foundation/color_house/colors.dart';
 import '../foundation/text_widget/Big_text.dart';
 import '../foundation/text_widget/Small_text.dart';
+import 'package:http/http.dart' as http;
 
-class Login_page extends StatefulWidget {
-  const Login_page({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<Login_page> createState() => _Login_pageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _Login_pageState extends State<Login_page> with RegisterAuth {
+class _LoginPageState extends State<LoginPage> {
+  List<SignIn> _signIn = [];
+  final data = Data();
+
   bool visiblePassword = false;
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  Future signIn(BuildContext context) async {
+    var data = json.encode({
+      "username": usernameController.text,
+      "password": passwordController.text
+    });
+    http.Response response = await http.post(
+        Uri.parse('http://192.168.137.1:5000/user/log'),
+        body: data,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": ""
+        });
+    if (response.statusCode == 200) {
+      // Future.delayed(Duration(seconds: 3));
+      setState(() {
+        const CircularProgressIndicator();
+      });
+
+      // print("entered");
+      try {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => general_page(),
+          ),
+        );
+        // return const general_page();
+      } catch (e) {
+        return e.toString();
+      }
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // signIn();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,47 +77,43 @@ class _Login_pageState extends State<Login_page> with RegisterAuth {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
-              key: _formKey,
+              // key: _formKey,
               child: Center(
                 child: Column(
                   children: [
                     SizedBox(
                       height: W / 5.5,
                     ),
-
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Container(
-                        width: W,
-                        height: W / 15,
-                        child: Bigtext(
-                          text: "WELCOME BACK",
-                          space: 0,
-                          fontsize: 23,
-                          color: MyColors.maincolor,
-                          textAlign: TextAlign.center,
-                        ),
+                    SizedBox(
+                      width: W,
+                      height: W / 15,
+                      child: Bigtext(
+                        text: "WELCOME BACK",
+                        space: 0,
+                        fontsize: 23,
+                        color: MyColors.maincolor,
+                        textAlign: TextAlign.center,
                       ),
                     ),
-
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: TextFormField(
-                        decoration: buildInputDecoration("Username"),
-                        validator:
-                        InputValidator.emptyCheck("Username can't be empty"),
-                      ),
+                    const SizedBox(
+                      height: 20,
                     ),
-
-
+                    TextFormField(
+                      controller: usernameController,
+                      decoration: buildInputDecoration("Username"),
+                      validator:
+                          InputValidator.emptyCheck("Username can't be empty"),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
                         obscureText: visiblePassword,
+                        controller: passwordController,
                         decoration: buildInputDecoration("Password", true),
                         validator: InputValidator.password,
                         onChanged: (t) {
@@ -73,36 +121,41 @@ class _Login_pageState extends State<Login_page> with RegisterAuth {
                         },
                       ),
                     ),
-
-
                     GestureDetector(
                       child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 15),
+                        margin: const EdgeInsets.symmetric(vertical: 15),
                         width: W,
-                        child: Smalltext(text: 'Forgot Password ?', fontsize: 15, color: Colors.red, space: 0, textAlign: TextAlign.right,),
+                        child: Smalltext(
+                          text: 'Forgot Password ?',
+                          fontsize: 15,
+                          color: Colors.red,
+                          space: 0,
+                          textAlign: TextAlign.right,
+                        ),
                       ),
                     ),
-
-                    Container(
+                    SizedBox(
                       width: W / 1.07,
                       height: W / 9,
                       child: ElevatedButton(
                         onPressed: () {
-                          register();
+                          signIn(context);
                         },
+                        // SignIn();
+                        // register();
+
                         style: ElevatedButton.styleFrom(
                           backgroundColor: MyColors.maincolor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        child: const Text("Login", style: TextStyle(color: Colors.white),
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
-
-
-
                     Padding(
                       padding: const EdgeInsets.all(30),
                       child: Row(
@@ -113,12 +166,10 @@ class _Login_pageState extends State<Login_page> with RegisterAuth {
                             width: W / 3,
                             color: Colors.black,
                           ),
-                          Container(
-                            child: Smalltext(
-                              text: 'OR',
-                              fontsize: 15,
-                              space: 0,
-                            ),
+                          Smalltext(
+                            text: 'OR',
+                            fontsize: 15,
+                            space: 0,
                           ),
                           Container(
                             height: 1.5,
@@ -128,78 +179,90 @@ class _Login_pageState extends State<Login_page> with RegisterAuth {
                         ],
                       ),
                     ),
-
-
-                    Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            height: H / 14,
-                            width: W / 7,
-                            child: MaterialButton(
-                              padding: const EdgeInsets.all(5),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(25))),
-                              child: Image(
-                                image: AssetImage("assets/images/slider/google.png"),
-                                fit: BoxFit.cover,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          height: H / 14,
+                          width: W / 7,
+                          child: MaterialButton(
+                            padding: const EdgeInsets.all(5),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(25),
                               ),
-                              onPressed: () {},
                             ),
+                            child: const Image(
+                              image:
+                                  AssetImage("assets/images/slider/google.png"),
+                              fit: BoxFit.cover,
+                            ),
+                            onPressed: () {},
                           ),
-                          Container(
-                            height: H / 18,
-                            width: W / 8.5,
-                            child: MaterialButton(
-                              padding: const EdgeInsets.all(5),
-                              color: MyColors.fb_blue,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(25))),
-                              child: Image(
-                                image: AssetImage("assets/images/slider/fb1.png"),
-                                fit: BoxFit.cover,
+                        ),
+                        SizedBox(
+                          height: H / 18,
+                          width: W / 8.5,
+                          child: MaterialButton(
+                            padding: const EdgeInsets.all(5),
+                            color: MyColors.fb_blue,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25))),
+                            child: const Image(
+                              image: AssetImage("assets/images/slider/fb1.png"),
+                              fit: BoxFit.cover,
+                            ),
+                            onPressed: () {},
+                          ),
+                        ),
+                        SizedBox(
+                          height: H / 14,
+                          width: W / 7,
+                          child: MaterialButton(
+                            padding: const EdgeInsets.all(5),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(25),
                               ),
-                              onPressed: () {},
                             ),
-                          ),
-                          Container(
-                            height: H / 14,
-                            width: W / 7,
-                            child: MaterialButton(
-                              padding: const EdgeInsets.all(5),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(25))),
-                              child: Image(
-                                image: AssetImage("assets/images/slider/apple.png"),
-                                fit: BoxFit.cover,
-                              ),
-                              onPressed: () {},
+                            child: const Image(
+                              image:
+                                  AssetImage("assets/images/slider/apple.png"),
+                              fit: BoxFit.cover,
                             ),
+                            onPressed: () {},
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-
-
-                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 80),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 80),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Smalltext(text:"Don't have an account ? ", fontsize: 14, space: 0,),
+                          Smalltext(
+                            text:
+                                // user.email,
+                                "Don't have an account ? ",
+                            fontsize: 14,
+                            space: 0,
+                          ),
                           GestureDetector(
-                            onTap: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => signup_page()),
-                              );
-                            },
-                              child: Smalltext(text:"Create one ", fontsize: 14, space: 0, color: Colors.red,)),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const signup_page(),
+                                  ),
+                                );
+                              },
+                              child: Smalltext(
+                                text: "Create one ",
+                                fontsize: 14,
+                                space: 0,
+                                color: Colors.red,
+                              )),
                         ],
                       ),
                     ),
@@ -213,7 +276,6 @@ class _Login_pageState extends State<Login_page> with RegisterAuth {
     );
   }
 
-
   InputDecoration buildInputDecoration(hintText, [eyeVisible = false]) {
     var outlineInputBorder = OutlineInputBorder(
       borderSide: BorderSide(color: Colors.grey.withOpacity(0.2)),
@@ -223,58 +285,67 @@ class _Login_pageState extends State<Login_page> with RegisterAuth {
     return InputDecoration(
       suffixIcon: eyeVisible
           ? IconButton(
-        icon: Icon(
-          visiblePassword ? Icons.visibility : Icons.visibility_off,
-          color: Colors.grey,
-        ),
-        onPressed: () {
-          setState(() {
-            visiblePassword = !visiblePassword;
-          });
-        },
-      )
+              icon: Icon(
+                visiblePassword ? Icons.visibility : Icons.visibility_off,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                setState(() {
+                  visiblePassword = !visiblePassword;
+                });
+              },
+            )
           : const SizedBox.shrink(),
       hintText: hintText,
-      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 10),
       border: outlineInputBorder,
       enabledBorder: outlineInputBorder,
       focusedBorder: OutlineInputBorder(
         borderSide:
-        BorderSide(width: 0.5, color: MyColors.maincolor.withOpacity(0.6)),
+            BorderSide(width: 0.5, color: MyColors.maincolor.withOpacity(0.6)),
         borderRadius: BorderRadius.circular(10),
       ),
     );
   }
 
-  @override
-  Future<void> register() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      setState(() {
-        isLoading = true;
-      });
-      if (rememberMe) {
-        print("saved");
-      }
-      await Future.delayed(const Duration(seconds: 1));
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
+  // @override
+  // Future<void> register() async {
+  //   if (_formKey.currentState!.validate()) {
+  //     _formKey.currentState!.save();
+  //     setState(() {
+  //       isLoading = true;
+  //     });
+  //     if (rememberMe) {
+  //       print("saved");
+  //     }
+  //     await Future.delayed(const Duration(seconds: 1));
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
+  // Future SignIn() async {
+  //   showDialog(context: context, builder: (context) => Center(child: CircularProgressIndicator(),));
+  //   try {
+  //     await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //       email: usernameController.text.trim(),
+  //       password: passwordController.text.trim(),
+  //     );
+  //   } on FirebaseAuthException catch (e) {
+  //     // return e.toString();
+  //     print(e.toString());
+  //
+  //   }
+  //     Navigator.pop(context);
+  // }
 }
 
-
-
-mixin RegisterAuth {
-  GlobalKey<FormState> _formKey = GlobalKey();
-  bool rememberMe = false;
-  bool isLoading = false;
-  Future<void> register();
-}
-
-
-
+// mixin RegisterAuth {
+//   GlobalKey<FormState> _formKey = GlobalKey();
+//   bool rememberMe = false;
+//   bool isLoading = false;
+//   Future<void> register();
+// }
 
 class InputValidator {
   static String? confirmPasswordText;
@@ -300,4 +371,3 @@ class InputValidator {
     return null;
   }
 }
-
